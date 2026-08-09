@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}SEO{% endblock %}
+{% block heading %}SEO{% endblock %}
+{% block body %}
+
+<div class="panel">
+  <h2>Site health</h2>
+  <ul class="checklist">
+    {% for c in checks %}
+    <li class="{{ 'good' if c.ok else 'bad' }}">
+      <i class="{{ 'ri-checkbox-circle-fill' if c.ok else 'ri-error-warning-fill' }}"></i>
+      <span>{{ c.label }}{% if c.detail %} <small>{{ c.detail }}</small>{% endif %}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  <p class="hint">
+    Live files:
+    <a href="/robots.txt" target="_blank" rel="noopener">robots.txt</a> &middot;
+    <a href="/sitemap.xml" target="_blank" rel="noopener">sitemap.xml</a>
+    &mdash; both are generated from this screen, so there is nothing to upload.
+  </p>
+</div>
+
+<div class="panel">
+  <h2>Pages</h2>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>Page</th><th>Title</th><th class="hide-sm">Description</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for p in pages %}
+        <tr>
+          <td><code>{{ p.route }}</code></td>
+          <td>
+            {{ p.title or '-' }}
+            {% if p.title %}<span class="len {{ 'over' if p.title|length > 60 }}">{{ p.title|length }}</span>{% endif %}
+          </td>
+          <td class="hide-sm">
+            <span class="muted">{{ (p.description or '-')|truncate(70) }}</span>
+            {% if p.description %}<span class="len {{ 'over' if p.description|length > 160 }}">{{ p.description|length }}</span>{% endif %}
+          </td>
+          <td>
+            {% if p.noindex %}<span class="pill">noindex</span>{% else %}<span class="pill pill--on">indexed</span>{% endif %}
+          </td>
+          <td class="actions">
+            <a class="mini" href="/admin/seo/page?route={{ p.route|urlencode }}"><i class="ri-edit-line"></i> Edit</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="hint"><a href="/admin/redirects">Manage 301 redirects</a> for pages you have renamed.</p>
+</div>
+
+<form method="POST" action="/admin/seo" enctype="multipart/form-data">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  {% for group, rows in groups %}
+  <div class="panel">
+    <h2>{{ group }}</h2>
+    {% for key, label, kind, hint in rows %}
+    <div class="fld">
+      <label for="f-{{ key }}">{{ label }}</label>
+      {% if kind == 'textarea' %}
+        <textarea id="f-{{ key }}" name="{{ key }}" rows="3">{{ values.get(key, '') }}</textarea>
+      {% elif kind == 'image' %}
+        <div class="imgrow">
+          {% if values.get(key) %}<img src="/{{ values.get(key) }}" alt="" class="thumb">{% endif %}
+          <div class="imgrow-in">
+            <input type="text" id="f-{{ key }}" name="{{ key }}" value="{{ values.get(key, '') }}" placeholder="images/example.jpg">
+            <input type="file" name="{{ key }}_file" accept="image/*">
+          </div>
+        </div>
+      {% else %}
+        <input type="text" id="f-{{ key }}" name="{{ key }}" value="{{ values.get(key, '') }}">
+      {% endif %}
+      {% if hint %}<small class="fld-hint">{{ hint }}</small>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+  <div class="sticky-save">
+    <button type="submit" class="btn btn--primary"><i class="ri-save-3-line"></i> Save SEO Settings</button>
+  </div>
+</form>
+{% endblock %}

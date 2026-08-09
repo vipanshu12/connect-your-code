@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{{ cfg.label }}{% endblock %}
+{% block heading %}{{ cfg.label }}{% endblock %}
+{% block body %}
+<div class="bar">
+  <input type="search" id="tableSearch" placeholder="Search {{ cfg.label|lower }}..." aria-label="Search">
+  <a href="/admin/{{ section }}/new" class="btn btn--primary"><i class="ri-add-line"></i> Add New</a>
+</div>
+
+{% if rows %}
+<div class="panel panel--flush">
+  <div class="tablewrap">
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th style="width:74px">Image</th>
+          <th>{{ 'Title' if 'title' in cfg.fields else 'Name' }}</th>
+          <th class="hide-sm">Details</th>
+          <th style="width:90px">Status</th>
+          <th style="width:150px">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for r in rows %}
+        <tr>
+          <td>{% if r.image %}<img src="/{{ r.image }}" alt="" class="cell-img">{% else %}<span class="cell-img cell-img--none"><i class="{{ cfg.icon }}"></i></span>{% endif %}</td>
+          <td><b>{{ r.title if r.title is defined and r.title else r.name }}</b></td>
+          <td class="hide-sm muted">
+            {% if r.location is defined and r.location %}{{ r.location }}{% endif %}
+            {% if r.category is defined and r.category %} &middot; {{ r.category|title }}{% endif %}
+            {% if r.role is defined and r.role %}{{ r.role }}{% endif %}
+            {% if r.company is defined and r.company %}{{ r.company }}{% endif %}
+            {% if r.experience is defined and r.experience %} &middot; {{ r.experience }}{% endif %}
+          </td>
+          <td>{% if r.active %}<span class="pill pill--on">Live</span>{% else %}<span class="pill">Hidden</span>{% endif %}</td>
+          <td class="actions">
+            <a href="/admin/{{ section }}/edit?id={{ r.id }}" class="mini"><i class="ri-pencil-line"></i> Edit</a>
+            <form method="POST" action="/admin/{{ section }}/delete" class="inline js-confirm" data-name="{{ r.title if r.title is defined and r.title else r.name }}">
+              <input type="hidden" name="csrf" value="{{ csrf }}">
+              <input type="hidden" name="id" value="{{ r.id }}">
+              <button type="submit" class="mini mini--danger"><i class="ri-delete-bin-line"></i> Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<div class="panel empty-state">
+  <i class="{{ cfg.icon }}"></i>
+  <h2>No {{ cfg.label|lower }} yet</h2>
+  <p>Add your first entry and it will appear on the website straight away.</p>
+  <a href="/admin/{{ section }}/new" class="btn btn--primary"><i class="ri-add-line"></i> Add New</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   {# Everything below is generated from admin > SEO. Edit it there. #}
+   <title>{% block title %}{{ meta.title }}{% endblock %}</title>
+   <meta name="description" content="{% block desc %}{{ meta.description }}{% endblock %}">
+   <meta name="robots" content="{{ meta.robots }}">
+   <meta name="googlebot" content="{{ meta.robots }}">
+   {% if meta.keywords %}
+   <meta name="keywords" content="{{ meta.keywords }}">
+   {% endif %}
+   <link rel="canonical" href="{{ meta.canonical }}">
+
+   {% if meta.verification %}
+   <meta name="google-site-verification" content="{{ meta.verification }}">
+   {% endif %}
+   {% if meta.bing_verification %}
+   <meta name="msvalidate.01" content="{{ meta.bing_verification }}">
+   {% endif %}
+
+   <meta property="og:type" content="website">
+   <meta property="og:site_name" content="{{ s.site_name }}">
+   <meta property="og:locale" content="en_IN">
+   <meta property="og:url" content="{{ meta.canonical }}">
+   <meta property="og:title" content="{{ meta.og_title }}">
+   <meta property="og:description" content="{{ meta.og_desc }}">
+   <meta property="og:image" content="{{ meta.image }}">
+   <meta property="og:image:alt" content="{{ s.site_name }}">
+   <meta name="twitter:card" content="summary_large_image">
+   <meta name="twitter:title" content="{{ meta.og_title }}">
+   <meta name="twitter:description" content="{{ meta.og_desc }}">
+   <meta name="twitter:image" content="{{ meta.image }}">
+   {% if meta.twitter %}
+   <meta name="twitter:site" content="{{ meta.twitter }}">
+   {% endif %}
+   <meta name="theme-color" content="#0f172a">
+
+   <link rel="preload" as="image" href="/{% block ogimage %}{{ s.hero_image }}{% endblock %}" fetchpriority="high">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+   <link rel="stylesheet" href="/assets/css/styles.css">
+
+   <link rel="icon" href="/favicon.ico" sizes="any">
+   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+   {# One @graph rather than several disconnected blocks, so the crawler can
+      resolve the organisation, the page and the breadcrumbs as one entity. #}
+   <script type="application/ld+json">{{ jsonld|safe }}</script>
+
+   {% if meta.gtm %}
+   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+   var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;
+   j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})
+   (window,document,'script','dataLayer','{{ meta.gtm }}');</script>
+   {% elif meta.ga %}
+   <script async src="https://www.googletagmanager.com/gtag/js?id={{ meta.ga }}"></script>
+   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+   gtag('js',new Date());gtag('config','{{ meta.ga }}');</script>
+   {% endif %}
+</head>
+<body>
+   <a href="#main" class="skip">Skip to content</a>
+
+   <header class="site-header" id="siteHeader">
+      <div class="shell nav">
+         <a href="/" class="brand" aria-label="{{ s.site_name }} home">
+            <img src="/logo-white.png" alt="{{ s.site_name }}" fetchpriority="high" width="289" height="226">
+         </a>
+         <nav class="nav-links" aria-label="Primary">
+            <a href="/index.html">Home</a>
+            <a href="/about.html">About</a>
+            <a href="/service.html">Services</a>
+            <a href="/project.html">Projects</a>
+            <a href="/contact.html">Contact</a>
+         </nav>
+         <a href="/contact.html#quote" class="btn btn--primary nav-cta">Get a Quote</a>
+         <button class="nav-toggle" id="navToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navDrawer">
+            <span></span><span></span><span></span>
+         </button>
+      </div>
+   </header>
+
+   <div class="drawer" id="navDrawer">
+      <a href="/index.html" class="drawer-link">Home <i class="ri-arrow-right-up-line"></i></a>
+      <a href="/about.html" class="drawer-link">About <i class="ri-arrow-right-up-line"></i></a>
+      <a href="/service.html" class="drawer-link">Services <i class="ri-arrow-right-up-line"></i></a>
+      <a href="/project.html" class="drawer-link">Projects <i class="ri-arrow-right-up-line"></i></a>
+      <a href="/contact.html" class="drawer-link">Contact <i class="ri-arrow-right-up-line"></i></a>
+      <a href="/contact.html#quote" class="btn btn--primary btn--block">Get a Free Quote</a>
+      <div class="drawer-meta">
+         <a href="tel:{{ s.phone|replace(' ','') }}"><i class="ri-phone-fill"></i> {{ s.phone }}</a>
+         <a href="mailto:{{ s.email }}"><i class="ri-mail-fill"></i> {{ s.email }}</a>
+      </div>
+   </div>
+
+   <main id="main">
+{% block body %}{% endblock %}
+
+{% if page != '404.html' %}
+      <section class="cta-band" style="background-image:url('/build.jpg')">
+         <div class="shell">
+            <span class="eyebrow">Start Your Project</span>
+            <h2 class="h-lg">Ready To Break Ground?</h2>
+            <p>Send us your drawings, a scope note, or just a rough idea. We will come back with a realistic programme and an itemised budget.</p>
+            <div class="hero-actions">
+               <a href="/contact.html#quote" class="btn btn--primary">Request a Quote <i class="ri-arrow-right-line"></i></a>
+               <a href="tel:{{ s.phone|replace(' ','') }}" class="btn btn--ghost"><i class="ri-phone-fill"></i> {{ s.phone }}</a>
+            </div>
+         </div>
+      </section>
+{% endif %}
+   </main>
+
+   <footer class="site-footer">
+      <div class="shell">
+         <div class="foot-grid">
+            <div class="foot-brand">
+               <img src="/logo-white.png" alt="{{ s.site_name }}" loading="lazy" decoding="async" width="289" height="226">
+               <p>{{ s.footer_text }}</p>
+               <div class="socials-row">
+                  <a href="{{ s.facebook }}" target="_blank" rel="noopener" aria-label="Facebook"><i class="ri-facebook-fill"></i></a>
+                  <a href="{{ s.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
+                  <a href="{{ s.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
+                  <a href="{{ s.whatsapp }}" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="ri-whatsapp-fill"></i></a>
+               </div>
+            </div>
+            <div>
+               <h4>Quick Links</h4>
+               <nav class="foot-links" aria-label="Footer">
+                  <a href="/index.html">Home</a>
+                  <a href="/about.html">About Us</a>
+                  <a href="/service.html">Services</a>
+                  <a href="/project.html">Projects</a>
+                  <a href="/contact.html#careers">Careers</a>
+                  <a href="/contact.html">Contact</a>
+               </nav>
+            </div>
+            <div>
+               <h4>Services</h4>
+               <nav class="foot-links" aria-label="Services">
+                  {% for svc in services[:6] %}
+                  <a href="/service.html#{{ svc.slug }}">{{ svc.title }}</a>
+                  {% endfor %}
+               </nav>
+            </div>
+            <div>
+               <h4>Get In Touch</h4>
+               <ul class="foot-contact">
+                  <li><i class="ri-map-pin-2-fill"></i><span>{{ s.address }}</span></li>
+                  <li><i class="ri-phone-fill"></i><a href="tel:{{ s.phone|replace(' ','') }}">{{ s.phone }}</a></li>
+                  <li><i class="ri-mail-fill"></i><a href="mailto:{{ s.email }}">{{ s.email }}</a></li>
+                  <li><i class="ri-time-fill"></i><span>{{ s.hours }}</span></li>
+               </ul>
+               <form class="newsletter" data-newsletter>
+                  <label for="nlEmail" class="hide">Email address</label>
+                  <input type="email" id="nlEmail" name="email" placeholder="Your email address" required>
+                  <button type="submit" aria-label="Subscribe"><i class="ri-send-plane-fill"></i></button>
+               </form>
+            </div>
+         </div>
+         <div class="foot-bottom">
+            <p>&copy; <span data-year>2026</span> {{ s.site_name }}. All rights reserved.</p>
+            <nav aria-label="Legal">
+               <a href="#">Privacy Policy</a>
+               <a href="#">Terms &amp; Conditions</a>
+               <a href="/sitemap.xml">Sitemap</a>
+            </nav>
+         </div>
+      </div>
+   </footer>
+
+   <script src="/assets/js/main.js" defer></script>
+</body>
+</html>

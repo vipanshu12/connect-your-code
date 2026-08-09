@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block ogimage %}build.jpg{% endblock %}
+{% block body %}
+{% with bg='build.jpg', eyebrow='What We Do', heading='Our Construction Services' %}
+{% include "_hero.html" %}
+{% endwith %}
+
+      <section class="section">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Capabilities</span>
+               <h2 class="h-lg">{{ services|length }} Disciplines, One Contract</h2>
+               <p>Whether you need a single package or a full turnkey delivery, the same team stays accountable from first drawing to final handover.</p>
+            </div>
+            <div class="grid grid--3">
+               {% for svc in services %}
+               <article class="card service-card" id="{{ svc.slug }}" data-reveal>
+                  <div class="ico">
+                     {% if svc.image %}<img src="/{{ svc.image }}" alt="" loading="lazy" decoding="async">
+                     {% else %}<i class="{{ svc.icon or 'ri-hammer-line' }}"></i>{% endif %}
+                  </div>
+                  <h3 class="h-sm">{{ svc.title }}</h3>
+                  <p>{{ svc.description }}</p>
+                  {% if svc.features %}
+                  <ul class="ticks">
+                     {% for f in svc.features %}<li><i class="ri-check-line"></i><span>{{ f }}</span></li>{% endfor %}
+                  </ul>
+                  {% endif %}
+                  <a href="/contact.html#quote" class="arrow-link">Request a Quote <i class="ri-arrow-right-line"></i></a>
+               </article>
+               {% endfor %}
+            </div>
+         </div>
+      </section>
+
+      <section class="section section--gray">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">How We Work</span>
+               <h2 class="h-lg">Our Delivery Process</h2>
+               <p>Four stages, each with a defined output you sign off before we move on.</p>
+            </div>
+            <div class="grid grid--4">
+               <div class="step" data-reveal><b>01</b><h3 class="h-sm">Consult</h3><p>We walk the site, review your drawings and understand the constraints before quoting anything.</p></div>
+               <div class="step" data-reveal><b>02</b><h3 class="h-sm">Plan &amp; Price</h3><p>Itemised bill of quantities, method statement and a programme with real milestone dates.</p></div>
+               <div class="step" data-reveal><b>03</b><h3 class="h-sm">Build</h3><p>Directly supervised execution with weekly progress reporting and stage-wise quality sign-off.</p></div>
+               <div class="step" data-reveal><b>04</b><h3 class="h-sm">Hand Over</h3><p>Snagging closed out, as-built drawings issued, O&amp;M manuals delivered, defects period supported.</p></div>
+            </div>
+         </div>
+      </section>
+
+      <section class="section section--navy">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Why Choose Us</span>
+               <h2 class="h-lg">What You Actually Get</h2>
+            </div>
+            <div class="grid grid--4">
+               <div class="feature" data-reveal><div class="ico"><i class="ri-team-line"></i></div><h3 class="h-sm">Own Workforce</h3><p>{{ s.stat_workforce }}+ directly managed people, not an anonymous chain of subcontractors.</p></div>
+               <div class="feature" data-reveal><div class="ico"><i class="ri-file-list-3-line"></i></div><h3 class="h-sm">Real Documentation</h3><p>Test certificates, inspection records and as-builts, issued as standard.</p></div>
+               <div class="feature" data-reveal><div class="ico"><i class="ri-calendar-check-line"></i></div><h3 class="h-sm">Honest Programme</h3><p>Dates we can hold, reported weekly against actual progress on site.</p></div>
+               <div class="feature" data-reveal><div class="ico"><i class="ri-customer-service-2-line"></i></div><h3 class="h-sm">After Handover</h3><p>Defect liability support and optional annual maintenance contracts.</p></div>
+            </div>
+         </div>
+      </section>
+
+      {% if faqs %}
+      {# FAQPage schema is emitted for exactly these questions. Marking up an
+         FAQ a visitor cannot see is a manual-action risk, so the two are
+         rendered from one list. #}
+      <section class="section section--gray" id="faq">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Questions</span>
+               <h2 class="h-lg">Frequently Asked Questions</h2>
+               <p>The things clients ask before signing a construction contract.</p>
+            </div>
+            <div style="max-width:820px;margin-inline:auto">
+               {% for f in faqs %}
+               <details class="acc" data-reveal>
+                  <summary>{{ f.question }} <i class="ri-add-line"></i></summary>
+                  <div class="acc-body"><p>{{ f.answer }}</p></div>
+               </details>
+               {% endfor %}
+            </div>
+         </div>
+      </section>
+      {% endif %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block heading %}Dashboard{% endblock %}
+{% block body %}
+<div class="tiles">
+  <a class="tile" href="/admin/projects"><i class="ri-building-2-line"></i><b>{{ counts.projects }}</b><span>Total Projects</span></a>
+  <a class="tile" href="/admin/projects"><i class="ri-checkbox-circle-line"></i><b>{{ counts.projects_completed }}</b><span>Completed</span></a>
+  <a class="tile" href="/admin/projects"><i class="ri-loader-4-line"></i><b>{{ counts.projects_ongoing }}</b><span>Ongoing</span></a>
+  <a class="tile" href="/admin/services"><i class="ri-hammer-line"></i><b>{{ counts.services }}</b><span>Services</span></a>
+  <a class="tile" href="/admin/team"><i class="ri-team-line"></i><b>{{ counts.team }}</b><span>Team Members</span></a>
+  <a class="tile" href="/admin/testimonials"><i class="ri-chat-quote-line"></i><b>{{ counts.testimonials }}</b><span>Testimonials</span></a>
+  <a class="tile" href="/admin/jobs"><i class="ri-briefcase-line"></i><b>{{ counts.jobs }}</b><span>Open Roles</span></a>
+  <a class="tile" href="/admin/media"><i class="ri-image-line"></i><b>{{ counts.media }}</b><span>Uploaded Images</span></a>
+</div>
+
+<div class="panel">
+  <h2>Quick actions</h2>
+  <div class="quick">
+    <a href="/admin/content" class="btn btn--primary"><i class="ri-file-edit-line"></i> Edit Site Content</a>
+    <a href="/admin/projects/new" class="btn btn--dark"><i class="ri-add-line"></i> Add Project</a>
+    <a href="/admin/services/new" class="btn btn--dark"><i class="ri-add-line"></i> Add Service</a>
+    <a href="/admin/team/new" class="btn btn--dark"><i class="ri-add-line"></i> Add Team Member</a>
+    <a href="/admin/media" class="btn btn--dark"><i class="ri-upload-2-line"></i> Upload Images</a>
+  </div>
+  <p class="hint">Every change here appears on the live website immediately &mdash; no republishing step.</p>
+</div>
+{% endblock %}

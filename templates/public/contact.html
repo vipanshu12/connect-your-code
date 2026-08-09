@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block ogimage %}mall.jpg{% endblock %}
+{% block body %}
+{% with bg='mall.jpg', eyebrow='Contact', heading="Let's Talk About Your Project" %}
+{% include "_hero.html" %}
+{% endwith %}
+
+      <section class="section" id="quote">
+         <div class="shell split split--wide">
+            <div data-reveal>
+               <span class="eyebrow">Request a Quote</span>
+               <h2 class="h-lg">Tell Us What You Are Building</h2>
+               <p>Share the scope, the site and your target dates. We will come back with a realistic programme and an itemised budget &mdash; usually within one business day.</p>
+
+               <div class="form-card" style="margin-top:28px">
+                  <form action="https://formsubmit.co/vgupta48030@gmail.com" method="POST" data-validate novalidate>
+                     <div class="form-row">
+                        <div class="field">
+                           <label for="cName">Full Name <span class="req">*</span></label>
+                           <input type="text" id="cName" name="name" data-label="Full name" placeholder="Your name" required>
+                           <span class="err"></span>
+                        </div>
+                        <div class="field">
+                           <label for="cEmail">Email <span class="req">*</span></label>
+                           <input type="email" id="cEmail" name="email" data-label="Email" placeholder="you@company.com" required>
+                           <span class="err"></span>
+                        </div>
+                     </div>
+                     <div class="form-row">
+                        <div class="field">
+                           <label for="cPhone">Phone <span class="req">*</span></label>
+                           <input type="tel" id="cPhone" name="phone" data-label="Phone" placeholder="{{ s.phone }}" required>
+                           <span class="err"></span>
+                        </div>
+                        <div class="field">
+                           <label for="cCompany">Company</label>
+                           <input type="text" id="cCompany" name="company" data-label="Company" placeholder="Optional">
+                           <span class="err"></span>
+                        </div>
+                     </div>
+                     <div class="field">
+                        <label for="cSubject">Project Type <span class="req">*</span></label>
+                        <select id="cSubject" name="subject" data-label="Project type" required>
+                           <option value="">Select a service</option>
+                           {% for svc in services %}<option>{{ svc.title }}</option>{% endfor %}
+                           <option>Other enquiry</option>
+                        </select>
+                        <span class="err"></span>
+                     </div>
+                     <div class="field">
+                        <label for="cMessage">Project Details <span class="req">*</span></label>
+                        <textarea id="cMessage" name="message" data-label="Project details" placeholder="Scope, approximate size, site location and your target start date." required></textarea>
+                        <span class="err"></span>
+                     </div>
+                     <input type="hidden" name="_subject" value="New project enquiry from website">
+                     <input type="hidden" name="_captcha" value="false">
+                     <button type="submit" class="btn btn--primary btn--block" data-label="Send Enquiry">Send Enquiry <i class="ri-send-plane-fill"></i></button>
+                  </form>
+               </div>
+            </div>
+
+            <div data-reveal>
+               <span class="eyebrow">Reach Us</span>
+               <h2 class="h-lg">Contact Details</h2>
+               <p>Prefer to talk? Our office is open six days a week.</p>
+               <div class="grid" style="gap:16px;margin-top:26px">
+                  <div class="info-tile">
+                     <div class="ico"><i class="ri-phone-fill"></i></div>
+                     <div><h3>Call Us</h3>
+                        <a href="tel:{{ s.phone|replace(' ','') }}">{{ s.phone }}</a><br>
+                        <a href="tel:{{ s.phone_alt|replace(' ','') }}">{{ s.phone_alt }}</a></div>
+                  </div>
+                  <div class="info-tile">
+                     <div class="ico"><i class="ri-mail-fill"></i></div>
+                     <div><h3>Email Us</h3>
+                        <a href="mailto:{{ s.email }}">{{ s.email }}</a><br>
+                        <a href="mailto:{{ s.email_careers }}">{{ s.email_careers }}</a></div>
+                  </div>
+                  <div class="info-tile">
+                     <div class="ico"><i class="ri-map-pin-2-fill"></i></div>
+                     <div><h3>Head Office</h3><p>{{ s.address }}</p></div>
+                  </div>
+                  <div class="info-tile">
+                     <div class="ico"><i class="ri-time-fill"></i></div>
+                     <div><h3>Working Hours</h3><p>{{ s.hours }}</p></div>
+                  </div>
+               </div>
+               <div class="socials-row" style="margin-top:24px">
+                  <a href="{{ s.facebook }}" target="_blank" rel="noopener" aria-label="Facebook" style="background:var(--navy)"><i class="ri-facebook-fill"></i></a>
+                  <a href="{{ s.instagram }}" target="_blank" rel="noopener" aria-label="Instagram" style="background:var(--navy)"><i class="ri-instagram-line"></i></a>
+                  <a href="{{ s.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn" style="background:var(--navy)"><i class="ri-linkedin-fill"></i></a>
+                  <a href="{{ s.whatsapp }}" target="_blank" rel="noopener" aria-label="WhatsApp" style="background:var(--navy)"><i class="ri-whatsapp-fill"></i></a>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      {% if s.map_embed %}
+      <section class="section section--tight section--gray">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Find Us</span>
+               <h2 class="h-md">Our Location</h2>
+            </div>
+            <iframe class="map-frame" title="{{ s.site_name }} office location" src="{{ s.map_embed }}"
+               allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+         </div>
+      </section>
+      {% endif %}
+
+      {% if jobs %}
+      <section class="section" id="careers">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Careers</span>
+               <h2 class="h-lg">Build Your Career With Us</h2>
+               <p>We hire engineers and supervisors who want responsibility early and are willing to be accountable for the work.</p>
+            </div>
+            <div class="grid grid--4" style="margin-bottom:48px">
+               <div class="feature" data-reveal><div class="ico"><i class="ri-graduation-cap-line"></i></div><h3 class="h-sm">Real Training</h3><p>Structured mentoring from senior engineers, not just being thrown at a site.</p></div>
+               <div class="feature" data-reveal><div class="ico"><i class="ri-line-chart-line"></i></div><h3 class="h-sm">Clear Progression</h3><p>Defined bands from graduate engineer through to project manager.</p></div>
+               <div class="feature" data-reveal><div class="ico"><i class="ri-shield-check-line"></i></div><h3 class="h-sm">Safe Sites</h3><p>Proper PPE, proper access, proper supervision. Non-negotiable.</p></div>
+               <div class="feature" data-reveal><div class="ico"><i class="ri-hand-coin-line"></i></div><h3 class="h-sm">Paid On Time</h3><p>Salaries and site allowances paid on schedule, every month.</p></div>
+            </div>
+
+            <div class="section-head section-head--center"><h3 class="h-md">Current Openings</h3></div>
+            {% for j in jobs %}
+            <details class="acc" data-reveal>
+               <summary>{{ j.title }} <i class="ri-add-line"></i></summary>
+               <div class="acc-body">
+                  <div class="job-meta">
+                     <span><i class="ri-map-pin-2-fill"></i> {{ j.location }}</span>
+                     <span><i class="ri-briefcase-4-fill"></i> {{ j.experience }} experience</span>
+                     <span><i class="ri-time-fill"></i> {{ j.employment }}</span>
+                  </div>
+                  <p>{{ j.description }}</p>
+                  <a href="mailto:{{ s.email_careers }}?subject=Application: {{ j.title|urlencode }}" class="btn btn--outline" style="margin-top:18px">Apply Now <i class="ri-arrow-right-line"></i></a>
+               </div>
+            </details>
+            {% endfor %}
+
+            <p class="text-center" style="margin-top:28px;font-size:15px;color:var(--muted)">
+               Nothing matching your discipline? Send your CV to
+               <a href="mailto:{{ s.email_careers }}" style="color:var(--accent-600);font-weight:600">{{ s.email_careers }}</a>
+               and we will keep it on file.
+            </p>
+         </div>
+      </section>
+      {% endif %}
+
+      {% if faqs %}
+      {# FAQPage schema is emitted for exactly these questions. Marking up an
+         FAQ a visitor cannot see is a manual-action risk, so the two are
+         rendered from one list. #}
+      <section class="section section--gray" id="faq">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Questions</span>
+               <h2 class="h-lg">Frequently Asked Questions</h2>
+               <p>The things clients ask before signing a construction contract.</p>
+            </div>
+            <div style="max-width:820px;margin-inline:auto">
+               {% for f in faqs %}
+               <details class="acc" data-reveal>
+                  <summary>{{ f.question }} <i class="ri-add-line"></i></summary>
+                  <div class="acc-body"><p>{{ f.answer }}</p></div>
+               </details>
+               {% endfor %}
+            </div>
+         </div>
+      </section>
+      {% endif %}
+{% endblock %}

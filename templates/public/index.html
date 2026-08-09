@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block body %}
+      <section class="hero" style="background-image:url('/{{ s.hero_image }}')">
+         <div class="shell">
+            <div class="hero-copy">
+               <div class="hero-rule"></div>
+               <h1 class="h-xl">{{ s.hero_heading|safe }}</h1>
+               <p>{{ s.hero_text }}</p>
+               <div class="hero-actions">
+                  <a href="/contact.html#quote" class="btn btn--primary">Get a Quote <i class="ri-arrow-right-line"></i></a>
+                  <a href="/project.html" class="btn btn--ghost">Our Projects</a>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <section class="stats-strip">
+         <div class="shell">
+            <div class="grid grid--4">
+               <div class="stat" data-reveal><b><span data-count="{{ s.stat_years }}" data-suffix="+">0</span></b><span>Years of Experience</span></div>
+               <div class="stat" data-reveal><b><span data-count="{{ s.stat_projects }}" data-suffix="+">0</span></b><span>Projects Completed</span></div>
+               <div class="stat" data-reveal><b><span data-count="{{ s.stat_clients }}" data-suffix="+">0</span></b><span>Satisfied Clients</span></div>
+               <div class="stat" data-reveal><b><span data-count="{{ s.stat_workforce }}" data-suffix="+">0</span></b><span>Skilled Workforce</span></div>
+            </div>
+         </div>
+      </section>
+
+      <section class="section">
+         <div class="shell split split--wide">
+            <div class="framed" data-reveal>
+               <img src="/{{ s.about_image }}" alt="{{ s.site_name }} team on site" loading="lazy" decoding="async">
+               <div class="badge-float"><b>{{ s.stat_years }}+</b><span>Years Building Trust</span></div>
+            </div>
+            <div data-reveal>
+               <span class="eyebrow">Who We Are</span>
+               <h2 class="h-lg">{{ s.about_heading }}</h2>
+               <p class="lede">{{ s.about_text }}</p>
+               <ul class="ticks">
+                  <li><i class="ri-checkbox-circle-fill"></i><span>In-house engineering, project management and execution teams</span></li>
+                  <li><i class="ri-checkbox-circle-fill"></i><span>Documented quality systems and safety protocols</span></li>
+                  <li><i class="ri-checkbox-circle-fill"></i><span>Transparent costing with no hidden variations</span></li>
+                  <li><i class="ri-checkbox-circle-fill"></i><span>A dedicated single point of contact for every project</span></li>
+               </ul>
+               <a href="/about.html" class="btn btn--outline">More About Us <i class="ri-arrow-right-line"></i></a>
+            </div>
+         </div>
+      </section>
+
+      <section class="section section--gray">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">What We Do</span>
+               <h2 class="h-lg">Complete Construction Services</h2>
+               <p>One accountable partner from feasibility and design through handover and maintenance.</p>
+            </div>
+            <div class="grid grid--3">
+               {% for svc in (featured_services or services[:6]) %}
+               <article class="card service-card" data-reveal>
+                  <div class="ico">
+                     {% if svc.image %}<img src="/{{ svc.image }}" alt="" loading="lazy" decoding="async">
+                     {% else %}<i class="{{ svc.icon or 'ri-hammer-line' }}"></i>{% endif %}
+                  </div>
+                  <h3 class="h-sm">{{ svc.title }}</h3>
+                  <p>{{ svc.description }}</p>
+                  <a href="/service.html#{{ svc.slug }}" class="arrow-link">Learn More <i class="ri-arrow-right-line"></i></a>
+               </article>
+               {% endfor %}
+            </div>
+            <div class="text-center mt-32">
+               <a href="/service.html" class="btn btn--dark">View All Services <i class="ri-arrow-right-line"></i></a>
+            </div>
+         </div>
+      </section>
+
+      <section class="section section--navy">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Why Choose Us</span>
+               <h2 class="h-lg">Built Around Certainty</h2>
+               <p>Construction goes wrong in predictable ways. We engineer those risks out before they reach site.</p>
+            </div>
+            <div class="grid grid--4">
+               <div class="feature" data-reveal><div class="ico"><i class="ri-time-line"></i></div><h3 class="h-sm">On-Time Delivery</h3><p>Programme-driven scheduling with weekly progress reporting against milestones.</p></div>
+               <div class="feature" data-reveal><div class="ico"><i class="ri-shield-check-line"></i></div><h3 class="h-sm">Safety First</h3><p>Documented method statements, site inductions and zero-tolerance PPE enforcement.</p></div>
+               <div class="feature" data-reveal><div class="ico"><i class="ri-wallet-3-line"></i></div><h3 class="h-sm">Transparent Pricing</h3><p>Itemised bills of quantity, open-book variations and no surprises at final account.</p></div>
+               <div class="feature" data-reveal><div class="ico"><i class="ri-award-line"></i></div><h3 class="h-sm">Quality Assured</h3><p>Stage-wise inspection, material testing and signed-off QA checklists.</p></div>
+            </div>
+         </div>
+      </section>
+
+      <section class="section">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Portfolio</span>
+               <h2 class="h-lg">Featured Projects</h2>
+               <p>A selection of recent completions and works currently on site.</p>
+            </div>
+            <div class="grid grid--3">
+               {% for p in (featured_projects or projects[:6]) %}
+               <a href="/project.html" class="project-card" data-reveal>
+                  <span class="tag {{ 'tag--ongoing' if p.status == 'ongoing' }}">{{ p.status|title }}</span>
+                  <img src="/{{ p.image }}" alt="{{ p.title }}, {{ p.location }}" loading="lazy" decoding="async">
+                  <div class="meta">
+                     <h3>{{ p.title }}</h3>
+                     <p><i class="ri-map-pin-2-fill"></i> {{ p.location }} &middot; {{ p.category|title }}</p>
+                  </div>
+               </a>
+               {% endfor %}
+            </div>
+            <div class="text-center mt-32">
+               <a href="/project.html" class="btn btn--dark">View Full Portfolio <i class="ri-arrow-right-line"></i></a>
+            </div>
+         </div>
+      </section>
+
+      <section class="section section--gray">
+         <div class="shell split">
+            <div data-reveal>
+               <span class="eyebrow">Safety &amp; Quality</span>
+               <h2 class="h-lg">Nobody Goes Home Injured</h2>
+               <p class="lede">Safety is not a poster on a hoarding. It is a daily routine of inductions, toolbox talks, permits to work and supervision &mdash; audited and recorded.</p>
+               <ul class="ticks">
+                  <li><i class="ri-shield-check-fill"></i><span>Site-specific health and safety plan before mobilisation</span></li>
+                  <li><i class="ri-shield-check-fill"></i><span>Trained safety officers on every active site</span></li>
+                  <li><i class="ri-shield-check-fill"></i><span>Third-party material testing and batch records</span></li>
+                  <li><i class="ri-shield-check-fill"></i><span>Snag-free handover with full O&amp;M documentation</span></li>
+               </ul>
+               <a href="/about.html" class="btn btn--outline">Our Standards <i class="ri-arrow-right-line"></i></a>
+            </div>
+            <div class="framed" data-reveal>
+               <img src="/site.jpg" alt="Site supervisor conducting a safety inspection" loading="lazy" decoding="async">
+            </div>
+         </div>
+      </section>
+
+      {% if testimonials %}
+      <section class="section section--gray">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Testimonials</span>
+               <h2 class="h-lg">What Our Clients Say</h2>
+            </div>
+            <div class="quote-track" id="quoteTrack">
+               {% for t in testimonials %}
+               <article class="quote">
+                  <div class="rating" aria-label="Rated {{ t.rating }} out of 5">
+                     {% for _ in range(t.rating) %}<i class="ri-star-fill"></i>{% endfor %}
+                  </div>
+                  <blockquote>{{ t.quote }}</blockquote>
+                  <div class="client">
+                     {% if t.image %}<img src="/{{ t.image }}" alt="" loading="lazy" decoding="async">{% endif %}
+                     <div><b>{{ t.name }}</b><span>{{ t.company }}</span></div>
+                  </div>
+               </article>
+               {% endfor %}
+            </div>
+            <div class="slider-nav">
+               <button type="button" id="quotePrev" aria-label="Previous testimonial"><i class="ri-arrow-left-line"></i></button>
+               <button type="button" id="quoteNext" aria-label="Next testimonial"><i class="ri-arrow-right-line"></i></button>
+            </div>
+         </div>
+      </section>
+      {% endif %}
+
+      <section class="section section--tight">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Trusted By</span>
+               <h2 class="h-md">Clients &amp; Partners</h2>
+            </div>
+            <div class="logos" data-reveal>
+               {% for n in range(1, 7) %}
+               <img src="/images/client-logo-{{ n }}.png" alt="Client logo" loading="lazy" decoding="async">
+               {% endfor %}
+            </div>
+         </div>
+      </section>
+{% endblock %}

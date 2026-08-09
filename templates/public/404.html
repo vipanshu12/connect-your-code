@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found | {{ s.site_name }}{% endblock %}
+{% block body %}
+      <section class="page-hero" style="background-image:url('/build.jpg')">
+         <div class="shell">
+            <span class="eyebrow" style="justify-content:center">Error 404</span>
+            <h1 class="h-lg">That Page Is Not On Site</h1>
+            <p style="color:#9fb0c2;margin-top:14px">The link may be old, or the page may have moved.</p>
+            <div class="hero-actions" style="justify-content:center;margin-top:26px">
+               <a href="/" class="btn btn--primary">Back to Home <i class="ri-arrow-right-line"></i></a>
+               <a href="/contact.html" class="btn btn--ghost">Contact Us</a>
+            </div>
+         </div>
+      </section>
+{% endblock %}

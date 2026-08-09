@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block ogimage %}aboutback.jpg{% endblock %}
+{% block body %}
+{% with bg='aboutback.jpg', eyebrow='About Us', heading='Engineering Trust Since 2014' %}
+{% include "_hero.html" %}
+{% endwith %}
+
+      <section class="section">
+         <div class="shell split split--wide">
+            <div class="framed" data-reveal>
+               <img src="/{{ s.about_image }}" alt="{{ s.site_name }} project team on site" loading="lazy" decoding="async">
+               <div class="badge-float"><b>{{ s.stat_projects }}+</b><span>Projects Delivered</span></div>
+            </div>
+            <div data-reveal>
+               <span class="eyebrow">Our Story</span>
+               <h2 class="h-lg">{{ s.about_heading }}</h2>
+               <p class="lede">{{ s.about_text }}</p>
+               <ul class="ticks">
+                  <li><i class="ri-checkbox-circle-fill"></i><span>Directly employed supervision on every site</span></li>
+                  <li><i class="ri-checkbox-circle-fill"></i><span>Vetted subcontractor panel with performance scoring</span></li>
+                  <li><i class="ri-checkbox-circle-fill"></i><span>Defect liability support after handover</span></li>
+               </ul>
+            </div>
+         </div>
+      </section>
+
+      <section class="section section--gray">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">What Drives Us</span>
+               <h2 class="h-lg">Mission, Vision &amp; Values</h2>
+            </div>
+            <div class="grid grid--3">
+               <article class="card feature" data-reveal>
+                  <div class="ico"><i class="ri-focus-3-line"></i></div>
+                  <h3 class="h-sm">Our Mission</h3><p>{{ s.mission }}</p>
+               </article>
+               <article class="card feature" data-reveal>
+                  <div class="ico"><i class="ri-eye-line"></i></div>
+                  <h3 class="h-sm">Our Vision</h3><p>{{ s.vision }}</p>
+               </article>
+               <article class="card feature" data-reveal>
+                  <div class="ico"><i class="ri-scales-3-line"></i></div>
+                  <h3 class="h-sm">Our Values</h3><p>{{ s.values }}</p>
+               </article>
+            </div>
+         </div>
+      </section>
+
+      <section class="section section--navy section--tight">
+         <div class="shell">
+            <div class="grid grid--4">
+               <div class="stat" data-reveal><b><span data-count="{{ s.stat_years }}" data-suffix="+">0</span></b><span>Years Operating</span></div>
+               <div class="stat" data-reveal><b><span data-count="{{ s.stat_projects }}" data-suffix="+">0</span></b><span>Projects Delivered</span></div>
+               <div class="stat" data-reveal><b><span data-count="{{ s.stat_clients }}" data-suffix="+">0</span></b><span>Repeat Clients</span></div>
+               <div class="stat" data-reveal><b><span data-count="{{ s.stat_workforce }}" data-suffix="+">0</span></b><span>People On Site</span></div>
+            </div>
+         </div>
+      </section>
+
+      {% if team %}
+      <section class="section">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Leadership</span>
+               <h2 class="h-lg">Meet Our Team</h2>
+               <p>Engineers and managers who have run sites, not just spreadsheets.</p>
+            </div>
+            <div class="grid grid--3">
+               {% for m in team %}
+               <article class="card member" data-reveal>
+                  <div class="photo">
+                     <img src="/{{ m.image }}" alt="{{ m.name }}, {{ m.role }}" loading="lazy" decoding="async">
+                     <div class="socials">
+                        {% if m.linkedin %}<a href="{{ m.linkedin }}" target="_blank" rel="noopener" aria-label="{{ m.name }} on LinkedIn"><i class="ri-linkedin-fill"></i></a>{% endif %}
+                        {% if m.email %}<a href="mailto:{{ m.email }}" aria-label="Email {{ m.name }}"><i class="ri-mail-fill"></i></a>{% endif %}
+                     </div>
+                  </div>
+                  <div class="who">
+                     <h3>{{ m.name }}</h3>
+                     <span class="role">{{ m.role }}</span>
+                     <p>{{ m.bio }}</p>
+                  </div>
+               </article>
+               {% endfor %}
+            </div>
+         </div>
+      </section>
+      {% endif %}
+
+      <section class="section section--gray">
+         <div class="shell split">
+            <div class="framed" data-reveal>
+               <img src="/site.jpg" alt="Safety inspection under way on an active site" loading="lazy" decoding="async">
+            </div>
+            <div data-reveal>
+               <span class="eyebrow">Safety &amp; Quality</span>
+               <h2 class="h-lg">Our Commitment On Site</h2>
+               <p class="lede">Every site runs to a written plan. Every material batch has a record. Every stage is inspected before it is covered up.</p>
+               <ul class="ticks">
+                  <li><i class="ri-shield-check-fill"></i><span>Site-specific HSE plan issued before mobilisation</span></li>
+                  <li><i class="ri-shield-check-fill"></i><span>Daily toolbox talks and mandatory site induction</span></li>
+                  <li><i class="ri-shield-check-fill"></i><span>Third-party testing for concrete, steel and soil</span></li>
+                  <li><i class="ri-shield-check-fill"></i><span>Stage-wise QA sign-off before the next trade starts</span></li>
+                  <li><i class="ri-shield-check-fill"></i><span>Full O&amp;M manuals and as-built drawings at handover</span></li>
+               </ul>
+            </div>
+         </div>
+      </section>
+
+      {% if testimonials %}
+      <section class="section section--tight">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Testimonials</span>
+               <h2 class="h-md">What Our Clients Say</h2>
+            </div>
+            <div class="quote-track" id="quoteTrack">
+               {% for t in testimonials %}
+               <article class="quote">
+                  <div class="rating" aria-label="Rated {{ t.rating }} out of 5">{% for _ in range(t.rating) %}<i class="ri-star-fill"></i>{% endfor %}</div>
+                  <blockquote>{{ t.quote }}</blockquote>
+                  <div class="client">
+                     {% if t.image %}<img src="/{{ t.image }}" alt="" loading="lazy" decoding="async">{% endif %}
+                     <div><b>{{ t.name }}</b><span>{{ t.company }}</span></div>
+                  </div>
+               </article>
+               {% endfor %}
+            </div>
+            <div class="slider-nav">
+               <button type="button" id="quotePrev" aria-label="Previous testimonial"><i class="ri-arrow-left-line"></i></button>
+               <button type="button" id="quoteNext" aria-label="Next testimonial"><i class="ri-arrow-right-line"></i></button>
+            </div>
+         </div>
+      </section>
+      {% endif %}
+{% endblock %}

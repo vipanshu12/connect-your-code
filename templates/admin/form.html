@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit' if item.id else 'Add' }} {{ cfg.label }}{% endblock %}
+{% block heading %}{{ 'Edit' if item.id else 'Add' }} {{ cfg.label|replace('ies','y') if cfg.label.endswith('ies') else cfg.label }}{% endblock %}
+{% block body %}
+<form method="POST" action="/admin/{{ section }}" enctype="multipart/form-data">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <input type="hidden" name="id" value="{{ item.id or '' }}">
+
+  <div class="panel">
+    {% for col in cfg.fields %}
+      {% if col == 'image' %}
+      <div class="fld">
+        <label for="f-image">Image</label>
+        <div class="imgrow">
+          {% if item.image %}<img src="/{{ item.image }}" alt="" class="thumb">{% endif %}
+          <div class="imgrow-in">
+            <input type="text" id="f-image" name="image" value="{{ item.image or '' }}" placeholder="images/example.jpg">
+            <input type="file" name="image_file" accept="image/*">
+            <small>Upload replaces the path above. Images are resized to 1920px and compressed automatically.</small>
+          </div>
+        </div>
+      </div>
+      {% elif col in ('description','bio','quote') %}
+      <div class="fld">
+        <label for="f-{{ col }}">{{ col|capitalize }}</label>
+        <textarea id="f-{{ col }}" name="{{ col }}" rows="4">{{ item.get(col, '') }}</textarea>
+      </div>
+      {% elif col == 'features' %}
+      <div class="fld">
+        <label for="f-features">Key features <small>(one per line)</small></label>
+        <textarea id="f-features" name="features" rows="4">{{ item.get('features', '') }}</textarea>
+      </div>
+      {% elif col == 'category' %}
+      <div class="fld">
+        <label for="f-category">Category</label>
+        <select id="f-category" name="category">
+          {% for opt in ['residential','commercial','industrial','infrastructure'] %}
+          <option value="{{ opt }}" {{ 'selected' if item.get('category')==opt }}>{{ opt|title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      {% elif col == 'status' %}
+      <div class="fld">
+        <label for="f-status">Status</label>
+        <select id="f-status" name="status">
+          {% for opt in ['completed','ongoing','upcoming'] %}
+          <option value="{{ opt }}" {{ 'selected' if item.get('status')==opt }}>{{ opt|title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      {% elif col == 'rating' %}
+      <div class="fld">
+        <label for="f-rating">Rating</label>
+        <select id="f-rating" name="rating">
+          {% for n in [5,4,3,2,1] %}
+          <option value="{{ n }}" {{ 'selected' if item.get('rating',5)|int==n }}>{{ n }} star{{ '' if n==1 else 's' }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      {% elif col in ('active','featured') %}
+      <div class="fld fld--check">
+        <label class="check">
+          <input type="checkbox" name="{{ col }}" value="1" {{ 'checked' if item.get(col, 1 if col=='active' else 0) }}>
+          <span>{{ 'Visible on the website' if col=='active' else 'Show in the featured list on the home page' }}</span>
+        </label>
+      </div>
+      {% elif col == 'sort' %}
+      <div class="fld">
+        <label for="f-sort">Display order <small>(lower shows first)</small></label>
+        <input type="number" id="f-sort" name="sort" value="{{ item.get('sort', 0) }}">
+      </div>
+      {% else %}
+      <div class="fld">
+        <label for="f-{{ col }}">{{ col|replace('_',' ')|capitalize }}</label>
+        <input type="text" id="f-{{ col }}" name="{{ col }}" value="{{ item.get(col, '') }}">
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="sticky-save">
+    <a href="/admin/{{ section }}" class="btn btn--ghost">Cancel</a>
+    <button type="submit" class="btn btn--primary"><i class="ri-save-3-line"></i> {{ 'Save Changes' if item.id else 'Create' }}</button>
+  </div>
+</form>
+{% endblock %}

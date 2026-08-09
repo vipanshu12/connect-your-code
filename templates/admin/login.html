@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login | Sharma Interior Construction</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/static/admin/admin.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+</head>
+<body class="login-page">
+  <form class="login-card" method="POST" action="/admin/login">
+    <img src="/logo-white.png" alt="Sharma Interior Construction" class="login-logo">
+    <h1>Admin Panel</h1>
+    <p class="sub">Sign in to manage your website content.</p>
+    {% if error %}<div class="alert alert--err"><i class="ri-error-warning-fill"></i> {{ error }}</div>{% endif %}
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" autocomplete="username" required autofocus>
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" autocomplete="current-password" required>
+    <button type="submit" class="btn btn--primary btn--block">Sign In <i class="ri-login-box-line"></i></button>
+    <a href="/" class="back">&larr; Back to website</a>
+  </form>
+</body>
+</html>

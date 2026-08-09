@@ -1,0 +1,17 @@
+      <section class="page-hero" style="background-image:url('/{{ bg }}')">
+         <div class="shell">
+            <span class="eyebrow" style="justify-content:center">{{ eyebrow }}</span>
+            <h1 class="h-lg">{{ heading }}</h1>
+            {# Rendered from views.CRUMBS - the same list that builds the
+               BreadcrumbList schema, so the two can never disagree. #}
+            <nav class="crumbs" aria-label="Breadcrumb">
+               {% for name, href in crumbs %}
+               {% if loop.last %}
+               <span aria-current="page">{{ name }}</span>
+               {% else %}
+               <a href="{{ href }}">{{ name }}</a> <span aria-hidden="true">/</span>
+               {% endif %}
+               {% endfor %}
+            </nav>
+         </div>
+      </section>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /_originals/
+
+Sitemap: https://sharmaconstruction.com/sitemap.xml

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block ogimage %}cc.jpg{% endblock %}
+{% block body %}
+{% with bg='cc.jpg', eyebrow='Portfolio', heading='Projects We Have Delivered' %}
+{% include "_hero.html" %}
+{% endwith %}
+
+      <section class="section">
+         <div class="shell">
+            <div class="section-head section-head--center">
+               <span class="eyebrow">Our Work</span>
+               <h2 class="h-lg">Browse The Portfolio</h2>
+               <p>Filter by sector or status. Select any project to see the detail.</p>
+            </div>
+
+            <div class="filter-bar" id="projectFilter" role="group" aria-label="Filter projects">
+               <button type="button" data-filter="all" class="is-active" aria-pressed="true">All</button>
+               <button type="button" data-filter="residential" aria-pressed="false">Residential</button>
+               <button type="button" data-filter="commercial" aria-pressed="false">Commercial</button>
+               <button type="button" data-filter="industrial" aria-pressed="false">Industrial</button>
+               <button type="button" data-filter="infrastructure" aria-pressed="false">Infrastructure</button>
+               <button type="button" data-filter="ongoing" aria-pressed="false">Ongoing</button>
+               <button type="button" data-filter="completed" aria-pressed="false">Completed</button>
+            </div>
+
+            <div class="grid grid--3" id="projectGrid">
+               {% for p in projects %}
+               <button type="button" class="project-card" data-tags="{{ p.tags }}" data-reveal
+                       data-img="/{{ p.image }}" data-title="{{ p.title }}" data-location="{{ p.location }}"
+                       data-type="{{ p.category|title }}" data-status="{{ p.status|title }}"
+                       data-date="{{ p.completion }}" data-desc="{{ p.description }}"
+                       aria-label="View details for {{ p.title }}">
+                  <span class="tag {{ 'tag--ongoing' if p.status == 'ongoing' }}">{{ p.status|title }}</span>
+                  <img src="/{{ p.image }}" alt="{{ p.title }}, {{ p.location }}" loading="lazy" decoding="async">
+                  <div class="meta">
+                     <h3>{{ p.title }}</h3>
+                     <p><i class="ri-map-pin-2-fill"></i> {{ p.location }} &middot; {{ p.category|title }}</p>
+                  </div>
+               </button>
+               {% endfor %}
+               <p class="empty hide" id="projectEmpty">
+                  <i class="ri-inbox-line"></i>
+                  No projects match that filter yet. Try another category.
+               </p>
+            </div>
+         </div>
+      </section>
+
+      <div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
+         <div class="modal-box">
+            <button type="button" class="modal-close" aria-label="Close"><i class="ri-close-line"></i></button>
+            <img id="pmImg" src="" alt="">
+            <div class="modal-body">
+               <h3 class="h-md" id="pmTitle"></h3>
+               <p id="pmDesc"></p>
+               <ul class="spec-list">
+                  <li><i class="ri-map-pin-2-fill"></i><span><b>Location:</b> <span id="pmLocation"></span></span></li>
+                  <li><i class="ri-building-line"></i><span><b>Type:</b> <span id="pmType"></span></span></li>
+                  <li><i class="ri-progress-4-line"></i><span><b>Status:</b> <span id="pmStatus"></span></span></li>
+                  <li><i class="ri-calendar-check-line"></i><span><b>Completion:</b> <span id="pmDate"></span></span></li>
+               </ul>
+               <a href="/contact.html#quote" class="btn btn--primary">Discuss a Similar Project <i class="ri-arrow-right-line"></i></a>
+            </div>
+         </div>
+      </div>
+
+      <section class="section section--navy section--tight">
+         <div class="shell">
+            <div class="grid grid--4">
+               <div class="stat" data-reveal><b><span data-count="{{ s.stat_projects }}" data-suffix="+">0</span></b><span>Projects Completed</span></div>
+               <div class="stat" data-reveal><b><span data-count="{{ projects|selectattr('status','equalto','ongoing')|list|length }}">0</span></b><span>Currently On Site</span></div>
+               <div class="stat" data-reveal><b><span data-count="5">0</span></b><span>States Operating</span></div>
+               <div class="stat" data-reveal><b><span data-count="98" data-suffix="%">0</span></b><span>On-Time Handover</span></div>
+            </div>
+         </div>
+      </section>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}SEO - {{ route }}{% endblock %}
+{% block heading %}SEO for {{ route }}{% endblock %}
+{% block body %}
+
+<div class="bar">
+  {% for p in pages %}
+  <a class="mini {{ 'mini--on' if p == route }}" href="/admin/seo/page?route={{ p|urlencode }}">{{ p }}</a>
+  {% endfor %}
+  <a class="mini" href="/admin/seo"><i class="ri-arrow-left-line"></i> All SEO settings</a>
+</div>
+
+<div class="panel">
+  <h2>Google preview</h2>
+  {# Approximate, but honest: same widths and truncation points Google uses. #}
+  <div class="serp">
+    <div class="serp-url">{{ meta.canonical }}</div>
+    <div class="serp-title">{{ meta.title }}</div>
+    <div class="serp-desc">{{ meta.description }}</div>
+  </div>
+</div>
+
+{% if warnings %}
+<div class="panel">
+  <h2>Checks</h2>
+  <ul class="checklist">
+    {% for level, text in warnings %}
+    <li class="{{ 'good' if level == 'ok' else ('bad' if level == 'error' else 'warnish') }}">
+      <i class="{% if level == 'ok' %}ri-checkbox-circle-fill{% elif level == 'error' %}ri-close-circle-fill{% elif level == 'warn' %}ri-alert-fill{% else %}ri-information-fill{% endif %}"></i>
+      <span>{{ text }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+
+<form method="POST" action="/admin/seo/page?route={{ route|urlencode }}">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+
+  <div class="panel">
+    <h2>Search result</h2>
+    <div class="fld">
+      <label for="f-title">Page title <small>ideal 30-{{ limits.title }} characters</small></label>
+      <input type="text" id="f-title" name="title" value="{{ row.get('title', '') }}" data-count="{{ limits.title }}">
+    </div>
+    <div class="fld">
+      <label for="f-description">Meta description <small>ideal 70-{{ limits.desc }} characters</small></label>
+      <textarea id="f-description" name="description" rows="3" data-count="{{ limits.desc }}">{{ row.get('description', '') }}</textarea>
+    </div>
+    <div class="fld">
+      <label for="f-keyword">Focus keyword <small>what this page should rank for</small></label>
+      <input type="text" id="f-keyword" name="keyword" value="{{ row.get('keyword', '') }}">
+      <small class="fld-hint">One phrase, written the way someone would type it into Google. Used only for the checks above &mdash; it is never published as a tag.</small>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Social share</h2>
+    <div class="fld">
+      <label for="f-og_title">Share title <small>blank = use the page title</small></label>
+      <input type="text" id="f-og_title" name="og_title" value="{{ row.get('og_title', '') }}">
+    </div>
+    <div class="fld">
+      <label for="f-og_desc">Share description <small>blank = use the meta description</small></label>
+      <textarea id="f-og_desc" name="og_desc" rows="2">{{ row.get('og_desc', '') }}</textarea>
+    </div>
+    <div class="fld">
+      <label for="f-og_image">Share image <small>blank = use the site default</small></label>
+      <input type="text" id="f-og_image" name="og_image" value="{{ row.get('og_image', '') }}" placeholder="images/example.jpg">
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Indexing</h2>
+    <div class="fld fld--check">
+      <label class="check"><input type="checkbox" name="noindex" value="1" {{ 'checked' if row.get('noindex') }}>
+        Hide this page from Google (noindex)</label>
+    </div>
+    <div class="fld fld--check">
+      <label class="check"><input type="checkbox" name="nofollow" value="1" {{ 'checked' if row.get('nofollow') }}>
+        Tell Google not to follow links on this page (nofollow)</label>
+    </div>
+    <div class="fld">
+      <label for="f-canonical">Canonical URL <small>blank = this page's own address</small></label>
+      <input type="text" id="f-canonical" name="canonical" value="{{ row.get('canonical', '') }}" placeholder="/service.html">
+      <small class="fld-hint">Only set this if this page duplicates another one. Pointing it somewhere wrong removes the page from Google.</small>
+    </div>
+    <div class="fld">
+      <label for="f-changefreq">Sitemap change frequency</label>
+      <select id="f-changefreq" name="changefreq">
+        {% for v in ['always','hourly','daily','weekly','monthly','yearly','never'] %}
+        <option value="{{ v }}" {{ 'selected' if row.get('changefreq') == v }}>{{ v }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="fld">
+      <label for="f-priority">Sitemap priority <small>0.0 to 1.0</small></label>
+      <input type="text" id="f-priority" name="priority" value="{{ row.get('priority', '0.7') }}">
+    </div>
+  </div>
+
+  <div class="sticky-save">
+    <a class="btn btn--ghost" href="{{ route }}" target="_blank" rel="noopener"><i class="ri-external-link-line"></i> View page</a>
+    <button type="submit" class="btn btn--primary"><i class="ri-save-3-line"></i> Save</button>
+  </div>
+</form>
+{% endblock %}

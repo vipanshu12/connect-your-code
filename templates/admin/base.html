@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Admin{% endblock %} | Sharma Interior Construction</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/static/admin/admin.css">
+<link rel="icon" href="/favicon.ico" sizes="any">
+</head>
+<body>
+<div class="shell-admin">
+
+  <aside class="side" id="side">
+    <a href="/admin" class="side-brand">
+      <img src="/logo-white.png" alt="">
+      <span>Admin</span>
+    </a>
+    <nav class="side-nav">
+      <a href="/admin" class="{{ 'on' if active=='dashboard' }}"><i class="ri-dashboard-line"></i> Dashboard</a>
+      <a href="/admin/content" class="{{ 'on' if active=='content' }}"><i class="ri-file-edit-line"></i> Site Content</a>
+      <p class="side-label">Sections</p>
+      {% for key, cfg in sections.items() %}
+      <a href="/admin/{{ key }}" class="{{ 'on' if active==key }}"><i class="{{ cfg.icon }}"></i> {{ cfg.label }}</a>
+      {% endfor %}
+      <p class="side-label">Media</p>
+      <a href="/admin/media" class="{{ 'on' if active=='media' }}"><i class="ri-image-line"></i> Images</a>
+      <p class="side-label">Search</p>
+      <a href="/admin/seo" class="{{ 'on' if active=='seo' }}"><i class="ri-search-eye-line"></i> SEO</a>
+    </nav>
+    <div class="side-foot">
+      <a href="/" target="_blank" rel="noopener"><i class="ri-external-link-line"></i> View Website</a>
+      <a href="/admin/logout"><i class="ri-logout-box-r-line"></i> Sign Out</a>
+    </div>
+  </aside>
+
+  <div class="main-admin">
+    <header class="topbar">
+      <button class="burger" id="burger" type="button" aria-label="Toggle menu"><i class="ri-menu-line"></i></button>
+      <h1>{% block heading %}Dashboard{% endblock %}</h1>
+      <div class="who"><i class="ri-shield-user-line"></i> {{ user.name or user.email }}</div>
+    </header>
+
+    <div class="content">
+      {% if msg %}
+      <div class="alert alert--{{ 'err' if kind=='err' else 'ok' }}">
+        <i class="ri-{{ 'error-warning-fill' if kind=='err' else 'checkbox-circle-fill' }}"></i> {{ msg }}
+      </div>
+      {% endif %}
+      {% block body %}{% endblock %}
+    </div>
+  </div>
+</div>
+<script src="/static/admin/admin.js" defer></script>
+</body>
+</html>
