@@ -268,3 +268,19 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+else:
+    # Imported, not run - i.e. a serverless host (Vercel) is using this module
+    # as its entrypoint. main() never executes there, so the schema would never
+    # be created: route() queries the redirects table on EVERY GET, before
+    # static files are even considered, so a missing schema turns all 500.
+    # Creating it here is idempotent (CREATE TABLE IF NOT EXISTS).
+    try:
+        db.init()
+    except Exception:
+        # Must not take the whole module down - log it and let requests report.
+        traceback.print_exc()
+
+    # Vercel's Python runtime looks for a module-level `handler` subclassing
+    # BaseHTTPRequestHandler. Exporting it here means the deploy works whether
+    # the platform picks server.py or api/index.py as the entrypoint.
+    handler = Handler
