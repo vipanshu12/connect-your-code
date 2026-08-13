@@ -1,30 +1,15 @@
 {
   "version": 2,
-
-  "//": [
-    "builds/routes, not functions/rewrites, on purpose: a `rewrites`",
-    "destination REPLACES the request path, so the handler saw /api/index for",
-    "every URL and 404'd everything. `routes` with dest preserves the original",
-    "path, which is what server.py's route() needs to dispatch on.",
-    "includeFiles ** is required too - without it templates/ is left out of the",
-    "bundle and every render raises TemplateNotFound."
-  ],
-
   "builds": [
     {
       "src": "server.py",
       "use": "@vercel/python",
-      "config": {
-        "includeFiles": "**",
-        "maxLambdaSize": "15mb"
-      }
+      "config": { "includeFiles": "**" }
     }
   ],
-
   "routes": [
     { "src": "/(.*)", "dest": "server.py" }
   ],
-
   "env": {
     "SECURE_COOKIES": "1",
     "DATA_DIR": "/tmp/site-data"
