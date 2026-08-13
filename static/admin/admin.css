@@ -201,3 +201,92 @@ tbody tr:hover{background:#f8fafc}
 .len.over{background:#fef2f2;color:var(--red)}
 .fld-hint{display:block;margin-top:6px;font-size:12.5px;color:var(--muted)}
 .mini--on{border-color:var(--navy);background:var(--navy);color:#fff}
+
+/* ---------- glass ----------
+   Same frosted layer as the public site, tuned for a dense admin UI:
+   panels stay high-opacity so table text and form labels keep their
+   contrast. Sidebar, topbar and login carry the visible blur. */
+:root{
+  --glass:rgba(255,255,255,.72); --glass-strong:rgba(255,255,255,.86);
+  --glass-hair:rgba(15,23,42,.08); --glass-sat:165%;
+  --glass-sh:0 1px 2px rgba(15,23,42,.04),0 14px 36px -14px rgba(15,23,42,.18);
+}
+
+body{
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(46rem 30rem at 100% -8%, rgba(249,115,22,.07), transparent 62%),
+    radial-gradient(40rem 28rem at 0% 4%, rgba(15,23,42,.07), transparent 60%);
+  background-attachment:fixed;
+}
+
+/* login sits on the navy gradient - the one place glass reads strongest */
+.login-card{
+  background:rgba(255,255,255,.86);
+  -webkit-backdrop-filter:blur(24px) saturate(var(--glass-sat));
+  backdrop-filter:blur(24px) saturate(var(--glass-sat));
+  border:1px solid rgba(255,255,255,.55);
+  box-shadow:0 32px 80px -20px rgba(0,0,0,.55)
+}
+
+.side{
+  background:linear-gradient(180deg,rgba(15,23,42,.92),rgba(30,41,59,.88));
+  -webkit-backdrop-filter:blur(20px) saturate(var(--glass-sat));
+  backdrop-filter:blur(20px) saturate(var(--glass-sat));
+  border-right:1px solid rgba(255,255,255,.09)
+}
+.side-nav a.on{box-shadow:0 6px 16px -6px rgba(249,115,22,.55)}
+
+.topbar{
+  background:rgba(255,255,255,.68);
+  -webkit-backdrop-filter:blur(18px) saturate(var(--glass-sat));
+  backdrop-filter:blur(18px) saturate(var(--glass-sat));
+  border-bottom:1px solid var(--glass-hair)
+}
+
+/* Panels hold the dense content, so they stay near-opaque on purpose. */
+.panel,.shot{
+  background:var(--glass-strong);
+  background-image:linear-gradient(160deg,rgba(255,255,255,.5),rgba(255,255,255,0) 40%);
+  -webkit-backdrop-filter:blur(var(--glass-blur,14px)) saturate(var(--glass-sat));
+  backdrop-filter:blur(14px) saturate(var(--glass-sat));
+  border-color:var(--glass-hair);
+  box-shadow:var(--glass-sh)
+}
+.tile{
+  background:var(--glass-strong);
+  -webkit-backdrop-filter:blur(14px) saturate(var(--glass-sat));
+  backdrop-filter:blur(14px) saturate(var(--glass-sat));
+  border-color:var(--glass-hair)
+}
+.mini{
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  border-color:var(--glass-hair)
+}
+.mini--on{background:var(--navy);border-color:var(--navy)}
+.sticky-save{
+  background:rgba(255,255,255,.80);
+  -webkit-backdrop-filter:blur(16px) saturate(var(--glass-sat));
+  backdrop-filter:blur(16px) saturate(var(--glass-sat));
+  border-top:1px solid var(--glass-hair)
+}
+.scrim{background:rgba(15,23,42,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+
+/* phones: keep the look, drop the per-panel blur cost */
+@media (max-width:900px){
+  .panel,.shot,.tile,.mini{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:rgba(255,255,255,.95)}
+}
+
+@supports not ((backdrop-filter:blur(2px)) or (-webkit-backdrop-filter:blur(2px))){
+  .panel,.shot,.tile,.mini,.login-card,.topbar,.sticky-save{background:var(--white)}
+  .side{background:var(--navy)}
+}
+
+@media (prefers-reduced-transparency:reduce){
+  body{background-image:none}
+  .panel,.shot,.tile,.mini,.login-card,.topbar,.sticky-save{background:var(--white);background-image:none}
+  .side{background:var(--navy)}
+  *,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+}

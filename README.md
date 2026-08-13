@@ -16,18 +16,18 @@ python3 server.py --lan        # reachable from phones on your wifi
 
 ## Admin login
 
-A temporary account was created for testing:
-
-```
-admin@sharmaconstruction.com  /  BuildSafe2026!
-```
-
-**Change this before the site goes anywhere.** It is written in plain text in
-this file and in the chat log:
+Create your own account — no credentials are shipped in this repo:
 
 ```bash
 python3 server.py --create-admin
 ```
+
+Run the same command again at any time to reset the password; doing so also
+revokes every existing session.
+
+> An earlier revision of this file listed a test login in plain text. It is in
+> the git history, so treat that password as burned — if it was ever set on a
+> live instance, rotate it with the command above.
 
 Run that again any time to reset a password — it also revokes every existing
 session for that user.

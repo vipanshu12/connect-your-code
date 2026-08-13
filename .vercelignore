@@ -1,0 +1,16 @@
+# Keep the deployment (and the function bundle) small and free of secrets.
+#
+# Vercel serves repo files it does not recognise as static assets, so anything
+# left here is fetchable over HTTP. data/ holds the admin password hash and
+# live session tokens - it must never ship.
+data/
+
+_originals/
+.venv/
+__pycache__/
+*.py[cod]
+.vscode/
+.DS_Store
+
+# Render-only config; harmless but pointless in a Vercel bundle.
+render.yaml

@@ -228,8 +228,12 @@ def main():
         return create_admin()
 
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    port = int(args[0]) if args else 8000
-    host = "0.0.0.0" if "--lan" in sys.argv else "127.0.0.1"
+    # PaaS hosts assign the port and expect the process to bind every
+    # interface; binding loopback there makes the service unreachable and
+    # the health check fails with no useful error.
+    env_port = os.environ.get("PORT")
+    port = int(env_port) if env_port else (int(args[0]) if args else 8000)
+    host = "0.0.0.0" if (env_port or "--lan" in sys.argv) else "127.0.0.1"
 
     db.init()
     core.purge_expired()

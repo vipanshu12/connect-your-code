@@ -10,7 +10,10 @@ import sqlite3
 import threading
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.path.join(BASE, "data")
+# DATA_DIR is overridable so the database can live on a mounted disk. On a
+# host like Render the repo is replaced on every deploy - anything written
+# inside it is lost - so the disk must sit outside the checkout.
+DATA_DIR = os.environ.get("DATA_DIR") or os.path.join(BASE, "data")
 DB_PATH = os.path.join(DATA_DIR, "site.db")
 UPLOAD_DIR = os.path.join(DATA_DIR, "uploads")
 

@@ -1400,3 +1400,218 @@ html, body { max-width: 100%; }
   .project-card:hover img, .member:hover .photo img { transform: none; }
   .card:hover, .step:hover, .info-tile:hover, .member:hover { transform: none; }
 }
+
+/*==================================================================
+  20 GLASS
+  Frosted surfaces layered on the navy/orange system - not a reskin.
+  Glass needs something behind it to refract, so the page carries a
+  faint navy/orange wash (7% max) and sections sit translucent over it.
+  Rules kept: same palette, same radii, same timings, AA contrast.
+==================================================================*/
+:root {
+  --glass-blur: 14px;
+  --glass-sat: 165%;
+  --glass: rgba(255, 255, 255, .70);          /* default light pane      */
+  --glass-strong: rgba(255, 255, 255, .84);   /* panes carrying body text */
+  --glass-edge: rgba(255, 255, 255, .70);     /* top highlight            */
+  --glass-hair: rgba(15, 23, 42, .08);        /* hairline border          */
+  --glass-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 14px 36px -14px rgba(15, 23, 42, .20);
+  --glass-dark: rgba(255, 255, 255, .08);     /* pane on navy             */
+  --glass-dark-edge: rgba(255, 255, 255, .16);
+  --glass-scrim: rgba(15, 23, 42, .58);       /* pane over photography    */
+}
+
+/*--- the wash the glass refracts. Fixed, so it never scrolls away. ----*/
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(58rem 40rem at 10% -12%, rgba(var(--accent-rgb), .07), transparent 60%),
+    radial-gradient(52rem 36rem at 94% 6%,  rgba(var(--navy-rgb), .08), transparent 62%),
+    radial-gradient(46rem 34rem at 48% 112%, rgba(var(--accent-rgb), .05), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* Sections go translucent so the wash reads through. Navy stays solid. */
+.section { background: rgba(255, 255, 255, .58); }
+.section--gray { background: rgba(248, 250, 252, .45); }
+.section--navy { background: var(--navy); }
+
+/*--- header ------------------------------------------------------------*/
+.site-header {
+  background: rgba(15, 23, 42, .62);
+  -webkit-backdrop-filter: blur(18px) saturate(var(--glass-sat));
+  backdrop-filter: blur(18px) saturate(var(--glass-sat));
+  border-bottom: 1px solid rgba(255, 255, 255, .10);
+}
+.site-header.is-stuck {
+  background: rgba(15, 23, 42, .82);
+  border-bottom-color: rgba(255, 255, 255, .12);
+  box-shadow: 0 1px 0 rgba(255,255,255,.06), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+.drawer {
+  background: rgba(15, 23, 42, .86);
+  -webkit-backdrop-filter: blur(20px) saturate(var(--glass-sat));
+  backdrop-filter: blur(20px) saturate(var(--glass-sat));
+  border-left: 1px solid rgba(255, 255, 255, .10);
+}
+
+/*--- light panes -------------------------------------------------------*/
+.card, .step, .quote, .form-card, .info-tile, .acc, .member, .chips li {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  border-color: var(--glass-hair);
+  box-shadow: var(--glass-shadow);
+}
+/* Forms and long-copy panes stay denser - readability outranks the effect. */
+.form-card, .quote, .acc { background: var(--glass-strong); }
+/* the highlight along the top edge is what reads as "glass" */
+.card, .step, .quote, .form-card, .info-tile, .member {
+  position: relative;
+  background-image: linear-gradient(160deg, rgba(255,255,255,.55), rgba(255,255,255,0) 42%);
+}
+.card:hover, .step:hover, .info-tile:hover, .member:hover {
+  background-color: rgba(255, 255, 255, .92);
+  box-shadow: 0 1px 2px rgba(15,23,42,.05), 0 22px 48px -18px rgba(15,23,42,.28);
+}
+
+/*--- panes over photography -------------------------------------------*/
+/* The scrim stays a gradient - it is what keeps white text legible over an
+   unknown photo. Blur is added under it, never in place of it. */
+.project-card .meta {
+  background: linear-gradient(0deg, rgba(15,23,42,.94) 12%, rgba(15,23,42,.62) 62%, transparent);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+.badge-float {
+  background: rgba(15, 23, 42, .66);
+  -webkit-backdrop-filter: blur(16px) saturate(var(--glass-sat));
+  backdrop-filter: blur(16px) saturate(var(--glass-sat));
+  border: 1px solid rgba(255, 255, 255, .16);
+}
+.tag {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, .18);
+}
+
+/*--- client logo tiles -------------------------------------------------*/
+.logos img {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(10px) saturate(var(--glass-sat));
+  backdrop-filter: blur(10px) saturate(var(--glass-sat));
+  border: 1px solid var(--glass-hair);
+  border-radius: var(--radius);
+}
+.logos img:hover {
+  background: rgba(255, 255, 255, .92);
+  border-color: rgba(var(--accent-rgb), .35);
+}
+
+/*--- filter pills and ghost buttons ------------------------------------*/
+.filter-bar button {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(10px) saturate(var(--glass-sat));
+  backdrop-filter: blur(10px) saturate(var(--glass-sat));
+  border-color: var(--glass-hair);
+}
+.filter-bar button.is-active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+.btn--ghost {
+  background: rgba(255, 255, 255, .10);
+  -webkit-backdrop-filter: blur(12px) saturate(var(--glass-sat));
+  backdrop-filter: blur(12px) saturate(var(--glass-sat));
+  border-color: rgba(255, 255, 255, .34);
+}
+.btn--outline {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/*--- panes on navy -----------------------------------------------------*/
+.stats-strip .stat, .section--navy .feature, .section--navy .info-tile {
+  background: var(--glass-dark);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid var(--glass-dark-edge);
+  border-radius: var(--radius);
+  padding: var(--s-5) var(--s-4);
+}
+.stats-strip .stat { box-shadow: inset 0 1px 0 rgba(255,255,255,.07); }
+
+/*--- modal: blur the page behind it ------------------------------------*/
+.modal {
+  background: rgba(15, 23, 42, .55);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  backdrop-filter: blur(10px) saturate(120%);
+}
+.modal-box {
+  background: rgba(255, 255, 255, .88);
+  -webkit-backdrop-filter: blur(24px) saturate(var(--glass-sat));
+  backdrop-filter: blur(24px) saturate(var(--glass-sat));
+  border: 1px solid rgba(255, 255, 255, .55);
+  box-shadow: 0 32px 80px -24px rgba(15, 23, 42, .55);
+}
+
+/*--- footer: glass panels inside the navy ------------------------------*/
+.site-footer {
+  background:
+    radial-gradient(40rem 24rem at 88% 0%, rgba(var(--accent-rgb), .10), transparent 62%),
+    var(--navy);
+}
+
+/*=============== 20b GLASS: COST, FALLBACK, PREFERENCES ===============*/
+/* backdrop-filter is the most expensive thing on the page. Phones get the
+   translucency and the wash, but not a blur behind every card. */
+@media (max-width: 991px) {
+  .card, .step, .quote, .form-card, .info-tile, .member, .chips li,
+  .logos img, .filter-bar button, .btn--outline {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .card, .step, .quote, .form-card, .info-tile, .member {
+    background-color: rgba(255, 255, 255, .93);
+  }
+}
+
+/* No backdrop-filter support: fall back to the solid design, not to a
+   washed-out one. Nothing below depends on the blur to stay readable. */
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  .card, .step, .quote, .form-card, .info-tile, .member, .chips li { background: var(--white); }
+  .section { background: var(--white); }
+  .section--gray { background: var(--bg); }
+  .site-header { background: rgba(15, 23, 42, .96); }
+  .site-header.is-stuck { background: var(--navy); }
+  .drawer { background: var(--navy); }
+  .modal { background: rgba(15, 23, 42, .74); }
+  .modal-box { background: var(--white); }
+  .logos img, .filter-bar button, .btn--outline { background: var(--white); }
+  .project-card .meta { background: rgba(15, 23, 42, .82); }
+  .badge-float { background: rgba(15, 23, 42, .88); }
+  .stats-strip .stat, .section--navy .feature, .section--navy .info-tile { background: rgba(255,255,255,.06); }
+}
+
+/* Some people get motion-sick or lose legibility with translucency.
+   Windows and macOS both expose this; honour it by going fully solid. */
+@media (prefers-reduced-transparency: reduce) {
+  body { background-image: none; }
+  .card, .step, .quote, .form-card, .info-tile, .member, .chips li,
+  .logos img, .filter-bar button, .btn--outline, .modal-box { background: var(--white); }
+  .section { background: var(--white); }
+  .section--gray { background: var(--bg); }
+  .site-header, .site-header.is-stuck, .drawer { background: var(--navy); }
+  .project-card .meta, .badge-float { background: rgba(15, 23, 42, .92); }
+  .card, .step, .quote, .form-card, .info-tile, .member { background-image: none; }
+  *, *::before, *::after { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}
+
+/* High contrast users get borders back at full strength. */
+@media (prefers-contrast: more) {
+  .card, .step, .quote, .form-card, .info-tile, .member, .chips li,
+  .logos img, .filter-bar button { background: var(--white); border-color: var(--slate); }
+  .section, .section--gray { background: var(--white); }
+}

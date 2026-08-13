@@ -1,0 +1,29 @@
+# Render Blueprint - https://render.com/docs/blueprint-spec
+#
+# SQLite is a file, so it needs a disk that survives deploys. Render replaces
+# the checkout on every push; the disk below is mounted OUTSIDE it at /var/data
+# and DATA_DIR points the app there. Without the disk the database resets to
+# seed content on every deploy and every uploaded image disappears.
+#
+# Disks are a paid feature. A free-tier web service cannot mount one.
+services:
+  - type: web
+    name: sharma-construction
+    runtime: python
+    plan: starter                  # disks require a paid instance type
+    region: singapore              # closest to Delhi NCR; also: oregon, frankfurt
+    buildCommand: pip install -r requirements.txt
+    startCommand: python3 server.py
+    healthCheckPath: /
+    # One instance only. SQLite on a shared disk cannot take concurrent
+    # writers - do not raise numInstances or enable autoscaling.
+    numInstances: 1
+    disk:
+      name: site-data
+      mountPath: /var/data
+      sizeGB: 1                    # the database is ~100 KB; this is for uploads
+    envVars:
+      - key: DATA_DIR
+        value: /var/data
+      - key: PYTHON_VERSION
+        value: "3.12"

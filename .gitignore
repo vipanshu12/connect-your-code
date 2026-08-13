@@ -1,7 +1,16 @@
 __pycache__/
 *.py[cod]
 _originals/
-data/*.db-wal
-data/*.db-shm
 .vscode/
 .DS_Store
+.venv/
+
+# The database holds the admin password hash, live session tokens and all
+# CMS content. It belongs on the host's disk, never in the repo.
+data/site.db
+data/*.db-wal
+data/*.db-shm
+
+# Admin-uploaded media - user content, restored from the disk, not the repo.
+data/uploads/*
+!data/uploads/.gitkeep
