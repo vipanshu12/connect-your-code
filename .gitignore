@@ -1,5 +1,9 @@
 __pycache__/
 *.py[cod]
+
+# dist/ is deliberately NOT ignored. It is what actually gets deployed: the
+# host serves it directly, and git is how it gets there. Regenerate it with
+# `python3 build.py` - never edit it by hand.
 _originals/
 .vscode/
 .DS_Store
