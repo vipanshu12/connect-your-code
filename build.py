@@ -62,6 +62,16 @@ def write(rel, data):
 
 
 def main():
+    # Supabase is the source of truth; pull it down before rendering so the
+    # build always reflects what the admin panel shows. --no-sync renders from
+    # whatever is already in SQLite, which is what you want when offline or
+    # when checking a change before it is published.
+    if "--no-sync" not in sys.argv:
+        import sync
+        if sync.main() != 0:
+            print("  sync failed - not building from stale content.\n")
+            return 1
+
     if os.path.isdir(DIST):
         shutil.rmtree(DIST)
     os.makedirs(DIST)

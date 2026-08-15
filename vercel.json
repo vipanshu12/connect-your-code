@@ -1,24 +1,22 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "assets/**", "use": "@vercel/static" },
-    { "src": "images/**", "use": "@vercel/static" },
-    { "src": "static/**", "use": "@vercel/static" },
-    { "src": "*.png", "use": "@vercel/static" },
-    { "src": "*.jpg", "use": "@vercel/static" },
-    { "src": "*.ico", "use": "@vercel/static" },
+  "framework": null,
+  "installCommand": "pip3 install jinja2==3.1.2",
+  "buildCommand": "python3 build.py",
+  "outputDirectory": "dist",
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "headers": [
     {
-      "src": "server.py",
-      "use": "@vercel/python",
-      "config": { "includeFiles": "**" }
+      "source": "/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }]
+    },
+    {
+      "source": "/images/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000" }]
+    },
+    {
+      "source": "/uploads/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=2592000" }]
     }
-  ],
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "server.py" }
-  ],
-  "env": {
-    "SECURE_COOKIES": "1",
-    "DATA_DIR": "/tmp/site-data"
-  }
+  ]
 }
