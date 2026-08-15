@@ -14,4 +14,5 @@ export const MEDIA_BUCKET = "media";
 // Create it at: Vercel project -> Settings -> Git -> Deploy Hooks.
 // Anyone who has this URL can trigger a rebuild (nothing more), so treat it as
 // low-risk but not secret. Leave blank to hide the Publish button.
-export const DEPLOY_HOOK = "";
+export const DEPLOY_HOOK =
+  "https://api.vercel.com/v1/integrations/deploy/prj_xlHc337us9yyAAlQ4izKFQ0cuC9B/MZmKf6N15S";
