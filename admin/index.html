@@ -5,12 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Admin - Sharma Interior Construction</title>
-<link rel="icon" href="../favicon.ico">
-<link rel="stylesheet" href="admin.css">
+<!-- Root-absolute on purpose: the host serves this page at /admin (no trailing
+     slash), so relative paths would resolve against / and 404. -->
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="/admin/admin.css">
 </head>
 <body>
   <div id="app" class="booting">Loading&hellip;</div>
   <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
-  <script type="module" src="app.js"></script>
+  <script type="module" src="/admin/app.js"></script>
 </body>
 </html>

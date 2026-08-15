@@ -181,7 +181,7 @@ function renderApp() {
         },
       }, "Publish") : null,
       DEPLOY_HOOK ? el("span", { class: "published", text: lastPublished() }) : null,
-      el("a", { class: "nav-item", href: "../index.html", target: "_blank" },
+      el("a", { class: "nav-item", href: "/", target: "_blank" },
         "View site ↗"),
       el("button", {
         class: "nav-item as-button",
