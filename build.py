@@ -24,8 +24,11 @@ from app.views import PUBLIC_ROUTES  # noqa: E402
 BASE = os.path.dirname(os.path.abspath(__file__))
 DIST = os.path.join(BASE, "dist")
 
-# static/admin is the admin panel's CSS - no reason to publish it.
-COPY_DIRS = ("assets", "images")
+# static/admin belongs to the old server-rendered panel and is not published.
+# admin/ is - it is the live editor, and the client reaches it at /admin/.
+# Publishing it is safe: it holds no secrets beyond the publishable key, and
+# every write is gated by Supabase auth plus the RLS policies.
+COPY_DIRS = ("assets", "images", "admin")
 ROOT_FILES = (
     "favicon.ico", "favicon-32.png", "favicon-512.png", "apple-touch-icon.png",
     "logo.png", "logo-removebg-preview.png", "logo-white.png", "l.png", "logo.jpg",
