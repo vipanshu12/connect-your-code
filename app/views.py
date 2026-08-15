@@ -14,13 +14,32 @@ from . import core, db, seo
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES = os.path.join(BASE, "templates")
 
+def media(path):
+    """Resolve an image field to a usable src.
+
+    Two kinds of value live in these columns now: repo-relative paths that
+    shipped with the code ("images/hero.jpg"), and absolute URLs returned by
+    Supabase Storage for anything uploaded through the admin. Templates used to
+    hardcode a leading slash, which turned the second kind into
+    "/https://..." and broke every uploaded image.
+    """
+    path = (path or "").strip()
+    if not path:
+        return ""
+    if path.startswith(("http://", "https://", "//", "data:")):
+        return path
+    return "/" + path.lstrip("/")
+
+
 def _env(subdir):
-    return Environment(
+    environment = Environment(
         loader=FileSystemLoader(os.path.join(TEMPLATES, subdir)),
         autoescape=select_autoescape(["html", "xml"]),
         trim_blocks=True,
         lstrip_blocks=True,
     )
+    environment.filters["media"] = media
+    return environment
 
 
 # Separate environments on purpose: both trees contain a base.html, and a

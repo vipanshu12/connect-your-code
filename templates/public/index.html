@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
-      <section class="hero" style="background-image:url('/{{ s.hero_image }}')">
+      <section class="hero" style="background-image:url('{{ s.hero_image|media }}')">
          <div class="shell">
             <div class="hero-copy">
                <div class="hero-rule"></div>
@@ -28,7 +28,7 @@
       <section class="section">
          <div class="shell split split--wide">
             <div class="framed" data-reveal>
-               <img src="/{{ s.about_image }}" alt="{{ s.site_name }} team on site" loading="lazy" decoding="async">
+               <img src="{{ s.about_image|media }}" alt="{{ s.site_name }} team on site" loading="lazy" decoding="async">
                <div class="badge-float"><b>{{ s.stat_years }}+</b><span>Years Building Trust</span></div>
             </div>
             <div data-reveal>
@@ -57,7 +57,7 @@
                {% for svc in (featured_services or services[:6]) %}
                <article class="card service-card" data-reveal>
                   <div class="ico">
-                     {% if svc.image %}<img src="/{{ svc.image }}" alt="" loading="lazy" decoding="async">
+                     {% if svc.image %}<img src="{{ svc.image|media }}" alt="" loading="lazy" decoding="async">
                      {% else %}<i class="{{ svc.icon or 'ri-hammer-line' }}"></i>{% endif %}
                   </div>
                   <h3 class="h-sm">{{ svc.title }}</h3>
@@ -99,7 +99,7 @@
                {% for p in (featured_projects or projects[:6]) %}
                <a href="/project.html" class="project-card" data-reveal>
                   <span class="tag {{ 'tag--ongoing' if p.status == 'ongoing' }}">{{ p.status|title }}</span>
-                  <img src="/{{ p.image }}" alt="{{ p.title }}, {{ p.location }}" loading="lazy" decoding="async">
+                  <img src="{{ p.image|media }}" alt="{{ p.title }}, {{ p.location }}" loading="lazy" decoding="async">
                   <div class="meta">
                      <h3>{{ p.title }}</h3>
                      <p><i class="ri-map-pin-2-fill"></i> {{ p.location }} &middot; {{ p.category|title }}</p>
@@ -148,7 +148,7 @@
                   </div>
                   <blockquote>{{ t.quote }}</blockquote>
                   <div class="client">
-                     {% if t.image %}<img src="/{{ t.image }}" alt="" loading="lazy" decoding="async">{% endif %}
+                     {% if t.image %}<img src="{{ t.image|media }}" alt="" loading="lazy" decoding="async">{% endif %}
                      <div><b>{{ t.name }}</b><span>{{ t.company }}</span></div>
                   </div>
                </article>

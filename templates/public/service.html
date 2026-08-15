@@ -16,7 +16,7 @@
                {% for svc in services %}
                <article class="card service-card" id="{{ svc.slug }}" data-reveal>
                   <div class="ico">
-                     {% if svc.image %}<img src="/{{ svc.image }}" alt="" loading="lazy" decoding="async">
+                     {% if svc.image %}<img src="{{ svc.image|media }}" alt="" loading="lazy" decoding="async">
                      {% else %}<i class="{{ svc.icon or 'ri-hammer-line' }}"></i>{% endif %}
                   </div>
                   <h3 class="h-sm">{{ svc.title }}</h3>

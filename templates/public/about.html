@@ -8,7 +8,7 @@
       <section class="section">
          <div class="shell split split--wide">
             <div class="framed" data-reveal>
-               <img src="/{{ s.about_image }}" alt="{{ s.site_name }} project team on site" loading="lazy" decoding="async">
+               <img src="{{ s.about_image|media }}" alt="{{ s.site_name }} project team on site" loading="lazy" decoding="async">
                <div class="badge-float"><b>{{ s.stat_projects }}+</b><span>Projects Delivered</span></div>
             </div>
             <div data-reveal>
@@ -70,7 +70,7 @@
                {% for m in team %}
                <article class="card member" data-reveal>
                   <div class="photo">
-                     <img src="/{{ m.image }}" alt="{{ m.name }}, {{ m.role }}" loading="lazy" decoding="async">
+                     <img src="{{ m.image|media }}" alt="{{ m.name }}, {{ m.role }}" loading="lazy" decoding="async">
                      <div class="socials">
                         {% if m.linkedin %}<a href="{{ m.linkedin }}" target="_blank" rel="noopener" aria-label="{{ m.name }} on LinkedIn"><i class="ri-linkedin-fill"></i></a>{% endif %}
                         {% if m.email %}<a href="mailto:{{ m.email }}" aria-label="Email {{ m.name }}"><i class="ri-mail-fill"></i></a>{% endif %}
@@ -121,7 +121,7 @@
                   <div class="rating" aria-label="Rated {{ t.rating }} out of 5">{% for _ in range(t.rating) %}<i class="ri-star-fill"></i>{% endfor %}</div>
                   <blockquote>{{ t.quote }}</blockquote>
                   <div class="client">
-                     {% if t.image %}<img src="/{{ t.image }}" alt="" loading="lazy" decoding="async">{% endif %}
+                     {% if t.image %}<img src="{{ t.image|media }}" alt="" loading="lazy" decoding="async">{% endif %}
                      <div><b>{{ t.name }}</b><span>{{ t.company }}</span></div>
                   </div>
                </article>

@@ -26,12 +26,12 @@
             <div class="grid grid--3" id="projectGrid">
                {% for p in projects %}
                <button type="button" class="project-card" data-tags="{{ p.tags }}" data-reveal
-                       data-img="/{{ p.image }}" data-title="{{ p.title }}" data-location="{{ p.location }}"
+                       data-img="{{ p.image|media }}" data-title="{{ p.title }}" data-location="{{ p.location }}"
                        data-type="{{ p.category|title }}" data-status="{{ p.status|title }}"
                        data-date="{{ p.completion }}" data-desc="{{ p.description }}"
                        aria-label="View details for {{ p.title }}">
                   <span class="tag {{ 'tag--ongoing' if p.status == 'ongoing' }}">{{ p.status|title }}</span>
-                  <img src="/{{ p.image }}" alt="{{ p.title }}, {{ p.location }}" loading="lazy" decoding="async">
+                  <img src="{{ p.image|media }}" alt="{{ p.title }}, {{ p.location }}" loading="lazy" decoding="async">
                   <div class="meta">
                      <h3>{{ p.title }}</h3>
                      <p><i class="ri-map-pin-2-fill"></i> {{ p.location }} &middot; {{ p.category|title }}</p>

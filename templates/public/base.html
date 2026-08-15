@@ -38,7 +38,7 @@
    {% endif %}
    <meta name="theme-color" content="#0f172a">
 
-   <link rel="preload" as="image" href="/{% block ogimage %}{{ s.hero_image }}{% endblock %}" fetchpriority="high">
+   <link rel="preload" as="image" href="{% filter media %}{% block ogimage %}{{ s.hero_image }}{% endblock %}{% endfilter %}" fetchpriority="high">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
    <link rel="stylesheet" href="/assets/css/styles.css">
