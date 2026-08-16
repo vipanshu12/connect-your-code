@@ -1,5 +1,5 @@
 // Generated from app/views.py - do not edit by hand.
-// Regenerate: python3 scratchpad/gen_schema_js.py
+// Regenerate: python3 tools/gen_admin_schema.py
 //
 // Mirrors SECTIONS, SETTING_GROUPS, SEO_GROUPS and PAGE_SEO_FIELDS so the
 // JavaScript admin edits exactly the fields the Python admin edited.
